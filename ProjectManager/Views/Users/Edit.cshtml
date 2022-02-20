@@ -1,0 +1,56 @@
+﻿@model ProjectManagerWeb.ViewModels.Users.EditVM
+@{
+    ViewBag.Title = "EDIT USER";
+}
+<fieldset>
+    <legend>EDIT USER</legend>
+    <form action="/Users/Edit" method="post">
+        @Html.HiddenFor(m => m.Id)
+        <div class="grid">
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Username)
+                </div>
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.Username)
+                    @Html.ValidationMessageFor(m => m.Username)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Password)
+                </div>
+                <div class="col-2">
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.FirstName)
+                </div>
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.FirstName)
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.LastName)
+                </div>
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.LastName)
+                    @Html.ValidationMessageFor(m => m.LastName)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="right">
+                        <a href="/Users/Index">Back</a>
+                        <input type="submit" value="Save" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</fieldset>

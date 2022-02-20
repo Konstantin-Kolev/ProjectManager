@@ -1,0 +1,38 @@
+﻿@model LoginVM
+@{ 
+    ViewBag.Title = "LOGIN";
+}
+<fieldset>
+    <legend>LOGIN</legend>
+    <form action="/Home/Login" method="post">
+        @Html.HiddenFor(m=>m.Url)
+        <div class="grid">
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Username)
+                </div>
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.Username)
+                    @Html.ValidationMessageFor(m => m.Username)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Password)
+                </div>
+                <div class="col-2">
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
+                    @Html.ValidationMessage("authError")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="right">
+                        <input type="submit" value="Login" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</fieldset>

@@ -1,0 +1,48 @@
+﻿<html>
+<head>
+    <title>
+        @ViewBag.Title
+    </title>
+    <link rel="stylesheet" href="/styles/site.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>Project Managemnet Software</h1>
+        </div>
+        <span class="right">Hello, @(this.Context.Session.GetObject<User>(GlobalConstants.LoggedUserKey) == null
+                                        ? "Annonymous"
+                                        : this.Context.Session.GetObject<User>(GlobalConstants.LoggedUserKey).Username
+                                        )
+        </span>
+    </div>
+    <div class="container menu">
+        <ul>
+            <li>
+                <a href="/Home/Index">HOME</a>
+            </li>
+            @if (this.Context.Session.GetObject<User>(GlobalConstants.LoggedUserKey) != null)
+            {
+                <li>
+                    <a href="/Users/Index">USERS</a>
+                </li>
+                <li>
+                    <a href="/Projects/Index">PROJECTS</a>
+                </li>
+                <li>
+                    <a href="/Home/Logout">LOGOUT</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href="/Home/Login">LOGIN</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="container">
+        @RenderBody()
+    </div>
+</body>
+</html>

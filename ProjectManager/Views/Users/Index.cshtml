@@ -1,0 +1,72 @@
+﻿@model ProjectManagerWeb.ViewModels.Users.IndexVM
+@{ 
+    ViewBag.Title = "USERS";
+}
+
+<div class="grid">
+    <form action="/Users/Index" method="get">
+        <div class="row">
+            <div class="col-2">
+                @Html.LabelFor(m => m.Filter.Username)
+            </div>
+            <div class="col-2">
+                @Html.LabelFor(m => m.Filter.FirstName)
+            </div>
+            <div class="col-2">
+                @Html.LabelFor(m => m.Filter.LastName)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                @Html.TextBoxFor(m => m.Filter.Username)
+            </div>
+            <div class="col-2">
+                @Html.TextBoxFor(m => m.Filter.FirstName)
+            </div>
+            <div class="col-2">
+                @Html.TextBoxFor(m => m.Filter.LastName)
+            </div>
+            <div class="col-2">
+                <input type="submit" value="Filter" />
+                <a href="/Users/Index">Clear</a>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-3">
+            <a href="/Users/Create">NEW</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-1">
+            Username
+        </div>
+        <div class="col-1">
+            First Name
+        </div>
+        <div class="col-1">
+            Last Name
+        </div>
+        <div class="col-2">
+        </div>
+    </div>
+    @foreach (User item in Model.Items)
+    {
+        <div class="row">
+            <div class="col-1">
+                @item.Username
+            </div>
+            <div class="col-1">
+                @item.FirstName
+            </div>
+            <div class="col-1">
+                @item.LastName
+            </div>
+            <div class="col-2">
+                <a href="/Users/Edit?id=@item.Id">Edit</a>
+                <a href="/Users/Delete?id=@item.Id" onclick="return confirm('Delete this item?')">Delete</a>
+            </div>
+        </div>
+    }
+    @{ Html.RenderPartial("/Views/Shared/PagerPartial.cshtml", Model.Pager);}
+</div>

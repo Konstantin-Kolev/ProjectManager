@@ -1,0 +1,64 @@
+﻿@model ProjectManagerWeb.ViewModels.Projects.IndexVM
+@{ 
+    ViewBag.Title = "PROJECTS";
+}
+
+<div class="grid">
+    <form action="/Projects/Index" method="get">
+        <div class="row">
+            <div class="col-2">
+                @Html.LabelFor(m => m.Filter.Title)
+            </div>
+            <div class="col-2">
+                @Html.LabelFor(m => m.Filter.Owner)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                @Html.TextBoxFor(m => m.Filter.Title)
+            </div>
+            <div class="col-2">
+                @Html.TextBoxFor(m => m.Filter.Owner)
+            </div>
+            <div class="col-2">
+                <input type="submit" value="Filter" />
+                <a href="/Projects/Index">Clear</a>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-3">
+            <a href="/Projects/Create">NEW</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-1">
+            Title
+        </div>
+        <div class="col-1">
+            Owner
+        </div>
+        <div class="col-2">
+        </div>
+    </div>
+    @foreach (Project item in Model.Items)
+    {
+        <div class="row">
+            <div class="col-1">
+                @item.Title
+            </div>
+            <div class="col-1">
+                @item.Owner.Username
+            </div>
+            <div class="col-2">
+                <a href="/Projects/Details?ProjectId=@item.Id">Details</a>
+                @if (this.Context.Session.GetObject<User>(GlobalConstants.LoggedUserKey).Id == item.OwnerId)
+                {
+                    <a href="/Projects/Edit?id=@item.Id">Edit</a>
+                    <a href="/Projects/Delete?id=@item.Id" onclick="return confirm('Delete this item?')">Delete</a>
+                }
+            </div>
+        </div>
+    }
+    @{ Html.RenderPartial("/Views/Shared/PagerPartial.cshtml", Model.Pager);}
+</div>

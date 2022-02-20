@@ -1,0 +1,175 @@
+﻿@model ProjectManagerWeb.ViewModels.Projects.DetailsVM
+@{ 
+    ViewBag.Title = "PROJECT DETAILS";
+}
+
+<fieldset>
+    <legend>PROJECT</legend>
+    <div class="grid">
+        <div class="row">
+            <div class="col-1">
+                Title
+            </div>
+            <div class="col-3">
+                @Model.Project.Title
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                Owner
+            </div>
+            <div class="col-2">
+                @Model.Project.Owner.Username
+            </div>
+        </div>
+        @if (string.IsNullOrEmpty(Model.Project.Description))
+        {
+            <p>This project doesn't have a description.</p>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-1">
+                    Description
+                </div>
+            </div>
+            <div class="row">
+                @Model.Project.Description
+            </div>
+        }
+
+    </div>
+</fieldset>
+<script>
+    window.addEventListener('load', function () {
+        selectTabPage('tpAssignments');
+    });
+
+    function selectTabPage(tabPageId) {
+        var selectedTab = document.getElementById(tabPageId);
+        var tabPages = document.getElementsByClassName("tabPage");
+        for(var i =0; i < tabPages.length; i++) {
+            tabPages[i].style.display = 'none';
+        }
+
+        selectedTab.style.display = 'block';
+    }
+</script>
+
+
+
+<div class='tabControl'>
+        <div class="tabControlHeader">
+            <input class"tabNavButton" type="button" onclick="selectTabPage('tpAssignments');" value="Assignments" />
+            <input class"tabNavButton" type="button" onclick="selectTabPage('tpMembers');" value="Members" />
+        </div>
+        <div id="tpAssignments" class="tabPage">
+            <div class="grid">
+                <form action="/Projects/Details" method="get">
+                    @Html.HiddenFor(m => m.ProjectId)   
+                    <div class="row">
+                        <div class="col-2">
+                            @Html.LabelFor(m => m.Filter.Title)
+                        </div>
+                        <div class="col-2">
+                            @Html.LabelFor(m => m.Filter.AssignedUser)
+                        </div>
+                        <div class="col-2">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            @Html.TextBoxFor(m => m.Filter.Title)
+                        </div>
+                        <div class="col-2">
+                            @Html.TextBoxFor(m => m.Filter.AssignedUser)
+                        </div>
+                        <div class="col-2">
+                            <input type="submit" value="Search" />
+                            <a href="/Projects/Details?ProjectId=@Model.ProjectId">Clear</a>
+                        </div>
+                    </div>
+                </form>
+               <div class="row">
+                   <div class="col-3">
+                        <a href="/Assignments/Create?ProjectId=@Model.Project.Id">NEW</a>
+                   </div>
+               </div>
+               <div class="row">
+                   <div class="col-1">
+                       Assignments
+                   </div>
+                   <div class="col-2">
+                   </div>
+               </div>
+               @foreach (AssignmentDTO item in Model.Items)
+              {
+                  <div class="row">
+                      <div class="col-2">
+                          @item.Title
+                      </div>
+                      @if(item.AssignedUser == null)
+                    {
+                        <div class="col-2">
+                          No user assigned
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-2">
+                          @item.AssignedUser.Username
+                        </div>
+                    }
+                    <div class="col-2">
+                          <a href="/Assignments/Edit?id=@item.Id">Edit</a>
+                          <a href="/Assignments/Delete?id=@item.Id" onclick="return confirm('Delete this item?')">Delete</a>
+                      </div>
+                  </div>
+              }
+                @{
+                    Html.RenderPartial("/Views/Shared/PagerPartial.cshtml", Model.Pager);
+                }
+            </div>
+        </div>
+        <div id="tpMembers" class="tabPage">
+            <div class="grid">
+                <div class="row">
+                    <form action="/Projects/AddMembers" method="post">
+                        <input type="hidden" name="projectId" value="@Model.Project.Id" />
+                        <div class="col-1">
+                            Make members:
+                        </div>
+                        <div class="col-2">
+                        @foreach (var item in Model.Users)
+                        {
+                            <input id="cbUser@(item.Id)" type="checkbox" name="usersId" value="@item.Id" />
+                            <label for="cbUser@(item.Id)">@item.FirstName @item.LastName (@item.Username)</label>
+                            <br/>
+                        }
+                        </div>
+                        <div class="col-1">
+                            <input type="submit" value="Make members" />
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        Members
+                    </div>
+                    <div class="col-1">
+                    </div>
+                </div>
+                @foreach (ProjectToMember item in Model.Members)
+                {
+                    <div class="row">
+                        <div class="col-2">
+                            @item.Member.FirstName @item.Member.LastName (@item.Member.Username)
+                        </div>
+                        <div class="col-1">
+                            <a href="/Projects/RemoveMember?id=@item.Id" onclick="return confirm('Remove member?')">Remove</a>
+                        </div>
+                    </div>
+                }
+            </div>
+    </div>
+</div>

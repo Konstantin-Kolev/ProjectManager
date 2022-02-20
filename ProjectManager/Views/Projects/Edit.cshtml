@@ -1,0 +1,39 @@
+﻿@model ProjectManagerWeb.ViewModels.Projects.EditVM
+@{
+    ViewBag.Title = "EDIT PROJECT";
+}
+<fieldset>
+    <legend>EDIT PROJECT</legend>
+    <form action="/Projects/Edit" method="post">
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.OwnerId)
+        <div class="grid">
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Title)
+                </div>
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.Title)
+                    @Html.ValidationMessageFor(m => m.Title)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Description)
+                </div>
+                <div class="col-2">
+                    @Html.TextAreaFor(m => m.Description)
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="right">
+                        <a href="/Projects/Index">Back</a>
+                        <input type="submit" value="Save" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</fieldset>

@@ -1,0 +1,42 @@
+﻿@model ProjectManagerWeb.ViewModels.Assignments.CreateVM
+@{
+    ViewBag.Title = "CREATE ASSIGNMENT";
+}
+<fieldset>
+    <legend>CREATE ASSIGNMENT</legend>
+    <form action="/Assignments/Create" method="post">
+        @Html.HiddenFor(m => m.ProjectId)
+        <div class="grid">
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.Title)
+                </div>
+                <div class="col-2">
+                    @Html.TextBoxFor(m => m.Title)
+                    @Html.ValidationMessageFor(m => m.Title)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    @Html.LabelFor(m => m.UserId)
+                </div>
+                <div class="col-2">
+                    <select name="UserId" id="userId">
+                        @foreach(var user in Model.Users)
+                        {
+                            <option value="@user.Id">@user.Username</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="right">
+                        <a href="/Projects/Details?ProjectId=@Model.ProjectId">Back</a>
+                        <input type="submit" value="Save" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</fieldset>

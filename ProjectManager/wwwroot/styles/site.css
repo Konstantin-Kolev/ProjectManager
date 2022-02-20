@@ -1,0 +1,102 @@
+﻿.container {
+    display: inline-block;
+    width: 100%;
+}
+
+.pager a {
+    margin: 0 3px;
+    text-decoration: none;
+    color: blue;
+}
+
+.menu ul {
+    list-style: none;
+}
+
+    .menu ul li {
+        float: left;
+        margin: 0px 10px;
+    }
+
+        .menu ul li a {
+            text-decoration: none;
+            color: blue;
+        }
+
+.tabControl {
+    margin: 20px 0;
+    display: inline-block;
+    border: 1px solid black;
+}
+
+    .tabControl .tabControlHeader {
+        display: block;
+        background-color: lightgrey;
+    }
+
+    .tabControl .tabNavButton {
+        border: none;
+        background-color: lightgrey;
+        height: 25px;
+        width: 70px;
+        padding: 0;
+        margin: 0
+    }
+
+    .tabControl .tabPage {
+        display: block;
+    }
+
+.grid {
+    display: inline-block;
+    width: 100%;
+}
+
+    .grid input[type=text] {
+        width: 300px;
+    }
+
+    .grid input[type=password] {
+        width: 300px;
+    }
+
+    .grid .row {
+        display: inline-block;
+        width: 100%;
+        margin: 2px 0px;
+    }
+
+        .grid .row .col-1 {
+            float: left;
+            width: 150px;
+        }
+
+        .grid .row .col-2 {
+            float: left;
+            width: 300px;
+        }
+
+        .grid .row .col-3 {
+            float: left;
+            width: 450px;
+        }
+
+.field-validation-error {
+    color: red;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.red {
+    color: red;
+}
+
+.b {
+    font-weight: bold;
+}
